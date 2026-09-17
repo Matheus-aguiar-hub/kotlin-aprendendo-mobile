@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -49,7 +50,6 @@ fun BasicComponentsScreen(modifier: Modifier = Modifier) {
         .fillMaxSize()
         .background(Color(239, 247, 207))
     ){
-
         Text(text = "Aulas Android",
             fontSize = 32.sp,
             fontWeight = FontWeight.Bold,
@@ -69,6 +69,14 @@ fun BasicComponentsScreen(modifier: Modifier = Modifier) {
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
         )
+
+        TextField(
+            value = "Feliz é aquele que nao é triste",
+             onValueChange =  {},
+            modifier = Modifier
+                .fillMaxWidth()
+        )
+
         AndroidEnemy(
             color =    Color.Yellow,
             modifier = Modifier.size(100.dp)
