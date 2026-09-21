@@ -358,7 +358,9 @@ fun BasicComponentsScreen(modifier: Modifier = Modifier) {
             horizontalArrangement = Arrangement.SpaceAround
         ) {
             Button(
-                onClick = {},
+                onClick = {
+                    corFundo = Color.Red
+                },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color.Blue,
                     contentColor = Color.Green
