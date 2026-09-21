@@ -1,12 +1,15 @@
 package com.example.componentesestado
 
+import android.R
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -19,9 +22,13 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.RadioButton
@@ -104,13 +111,17 @@ fun BasicComponentsScreen(modifier: Modifier = Modifier) {
         mutableStateOf(0)
     }
 
+    var corFundo by remember {
+        mutableStateOf(Color(239, 247,209))
+    }
+
     // Organiza os componentes um abaixo do outro
     Column(
         modifier = modifier
             // Ocupa todo o espaço disponivel
             .fillMaxSize()
             // Define a cor de fundo da tela
-            .background(Color(239, 247, 207))
+            .background(corFundo)
     )
     {
 
@@ -340,6 +351,40 @@ fun BasicComponentsScreen(modifier: Modifier = Modifier) {
             )
             Text("Linux")
         }//Linux RadioButton
+
+        Row(
+            modifier = Modifier
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceAround
+        ) {
+            Button(
+                onClick = {},
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color.Blue,
+                    contentColor = Color.Green
+                ),
+                border = BorderStroke(4.dp, Color.Red),
+                shape = RoundedCornerShape(topEnd = 12.dp, bottomStart = 12.dp)
+            ) {
+                Row( verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(imageVector = Icons.Default.Star,
+                        contentDescription = "Estrela")
+                    Text( text = "Clique aqui")
+
+                }//Texto "Cique aqui"
+
+            }//Botao
+
+            OutlinedButton(
+                onClick = {
+                    corFundo = Color.Cyan
+                }
+            ) {
+                Text(text = "Clique aqui")
+            }
+
+        }//Coluna horizontal do botao
 
     } // Coluna
 
