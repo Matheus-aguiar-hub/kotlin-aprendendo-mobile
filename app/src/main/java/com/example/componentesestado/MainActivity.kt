@@ -8,17 +8,32 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.CheckboxDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -26,21 +41,26 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.componentesestado.ui.theme.ComponentesEstadoTheme
 import com.example.componentesestado.ui.theme.Hunin
-import kotlin.math.log
 
 class MainActivity : ComponentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
         setContent {
             ComponentesEstadoTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                Scaffold(
+                    modifier = Modifier.fillMaxSize()
+                ) { innerPadding ->
+
                     BasicComponentsScreen(
                         modifier = Modifier.padding(innerPadding)
                     )
@@ -52,21 +72,51 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun BasicComponentsScreen(modifier: Modifier = Modifier) {
+
     // Guarda o valor digitado no campo de texto
-    val textFieldValue = remember {
+    var textFieldValue by remember {
         // Cria uma variavel mutável iniciando vazia
         mutableStateOf("")
     }
 
+    val quantidade = remember {
+        // Cria uma variavel mutável iniciando vazia
+        mutableStateOf("")
+    }
+
+    var email by remember {
+        mutableStateOf("")
+    }
+
+    var kotlin by remember {
+        mutableStateOf(false)
+    }
+
+    var jetComposable by remember {
+        mutableStateOf(false)
+    }
+
+    var android by remember {
+        mutableStateOf(false)
+    }
+
+    var sistemaSelecionado by remember {
+        mutableStateOf(0)
+    }
+
     // Organiza os componentes um abaixo do outro
-    Column(modifier = modifier
-        // Ocupa todo o espaço disponivel
-        .fillMaxSize()
-        // Define a cor de fundo da tela
-        .background(Color(239, 247, 207))
-    ){
+    Column(
+        modifier = modifier
+            // Ocupa todo o espaço disponivel
+            .fillMaxSize()
+            // Define a cor de fundo da tela
+            .background(Color(239, 247, 207))
+    )
+    {
+
         // Exibe um texto na tela
-        Text(text = "Aulas Android",
+        Text(
+            text = "Aulas Android",
             fontSize = 32.sp,
             fontWeight = FontWeight.Bold,
             color = Color(0xFF3DDC84),
@@ -78,9 +128,11 @@ fun BasicComponentsScreen(modifier: Modifier = Modifier) {
             textAlign = TextAlign.End,
             // Define o espacamento entre as letras
             letterSpacing = 4.sp
-        )
+        ) // Texto "Aulas Android"
+
         // Exibe o subtitulo na tela
-        Text(text = "Com Jetpack Compose",
+        Text(
+            text = "Com Jetpack Compose",
             fontSize = 16.sp,
             fontWeight = FontWeight.SemiBold,
             color = Color(66, 133, 244),
@@ -88,56 +140,207 @@ fun BasicComponentsScreen(modifier: Modifier = Modifier) {
             modifier = Modifier
                 // Centraliza o componente horizontalmente
                 .align(Alignment.CenterHorizontally)
-        )
+        ) // Texto "Com Jetpack Compose"
 
         // Cria um campo para entrada de texto
         TextField(
+            // Pega o valor atual da variavel que é mutável
+            value = textFieldValue,
 
-            //Pega o valor atual da variavel que é mutável
-            value = textFieldValue.value,
             // Atualiza o valor quando o usuario digita, sendo mutável
-            onValueChange =  { novoValor ->
+            onValueChange = { novoValor ->
+
                 // Atribui o novo valor digitado
-                 textFieldValue.value = novoValor
-                //Ve o log em tempo real da mensagem que chega
+                textFieldValue = novoValor
+
+                // Ve o log em tempo real da mensagem que chega
                 Log.i("teste", novoValor)
-                             },
+            },
+
             modifier = Modifier.fillMaxWidth(),
+
+            // Define as configuracoes do teclado
+            keyboardOptions = KeyboardOptions(
+                // Deixando a primeira linha em Maiusculo
+                capitalization = KeyboardCapitalization.Words
+            ),
+
+            // Texto informativo que fica em cima do que digita
+            label = {
+                Text("Nome e sobrenome")
+            },
+
+            // Adiciona o icone no comeco
+            leadingIcon = {
+
+                // Configuracoes do icone
+                Icon(
+                    // Import da imagem do icone
+                    imageVector = Icons.Default.Person,
+
+                    // Descricao
+                    contentDescription = "Icone pessoa",
+
+                    // Coloracao do icone
+                    tint = Color(66, 133, 244)
+                )
+            },
+
+            // Adiciona o icone no final
+            trailingIcon = {
+
+                // Configuracoes do icone
+                Icon(
+                    // Import da imagem do icone
+                    imageVector = Icons.Default.Person,
+
+                    // Descricao
+                    contentDescription = "Icone pessoa",
+
+                    // Coloracao do icone
+                    tint = Color(66, 133, 244)
+                )
+            }
+        ) // Nome e sobrenome
+
+        // Cria um campo para informar a quantidade
+        TextField(
+            value = quantidade.value,
+
+            onValueChange = { novoValor ->
+                quantidade.value = novoValor
+            },
+
             // Define as configuracoes do teclado
             keyboardOptions = KeyboardOptions(
                 // Define o teclado numerico
-                keyboardType = KeyboardType.Email
+                keyboardType = KeyboardType.Number
+            ),
+
+            // Texto exibido enquanto o campo estiver vazio
+            placeholder = {
+                Text(text = "Qual sua dúvida?")
+            },
+
+            // Define as cores do campo de texto
+            colors = TextFieldDefaults.colors(
+                focusedTextColor = Color.Blue,
+                unfocusedTextColor = Color.Red,
+                unfocusedPlaceholderColor = Color.Magenta
             )
+        ) // Quantidade
+
+        Spacer(
+            modifier = Modifier.height(16.dp)
         )
 
-        AndroidEnemy(
-            color =    Color.Yellow,
-            // Define o tamanho do inimigo
-            modifier = Modifier.size(100.dp)
-        )
-        AndroidEnemy(
-            modifier = Modifier.size(100.dp)
-                .size(100.dp)
-                .padding(4.dp),
-            color = Color.Red
-        )
-    }
-}
-// Cria um componente reutilizavel
-@Composable
-fun AndroidEnemy(
-    color: Color,
-    // Recebe as configuracoes do componente
-    modifier: Modifier = Modifier
-) {
-    // Exibe uma imagem na tela
-    Image(
-        modifier = modifier,
-        // Carrega a imagem dos recursos
-        painter = painterResource(R.drawable.ic_launcher_foreground),
-        // Aplica a cor recebida na imagem
-        colorFilter = ColorFilter.tint(color = color),
-        // Define a descricao da imagem
-        contentDescription = "Android Enemy"
-    )
-}
+        // Campo de email
+        OutlinedTextField(
+            // Pega o valor atual do campo de email
+            value = email,
+
+            // Funcao callback que passa um único parametro
+            onValueChange = { email = it },
+
+            singleLine = true,
+
+            modifier = Modifier
+                .fillMaxWidth(),
+
+            label = {
+                Text(text = "Email")
+            },
+
+            placeholder = {
+                Text(text = "Digite seu email...")
+            },
+
+            // Muda o formato do campo da caixa de texto
+            shape = RoundedCornerShape(
+                topStart = 32.dp,
+                bottomEnd = 32.dp
+            ),
+
+            colors = OutlinedTextFieldDefaults.colors(
+                // Muda a cor da borda
+                focusedBorderColor = Color.Blue,
+                unfocusedBorderColor = Color.Red
+            )
+        ) // Email
+
+        Row(
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Checkbox(
+                checked = kotlin,
+                onCheckedChange = { kotlin = it },
+                colors = CheckboxDefaults.colors(
+                    checkedColor = Color.Blue,
+                    uncheckedColor = Color.Red
+                )
+            )
+            Text("kotlin")
+
+        }// Kotlin checkbox
+
+        Row(
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Checkbox(
+                checked = jetComposable,
+                onCheckedChange = { jetComposable = it },
+                colors = CheckboxDefaults.colors(
+                    checkedColor = Color.Blue,
+                    uncheckedColor = Color.Red
+                )
+            )
+            Text("Jetpack composable")
+        }//Jetpack composable checkbox
+
+        Row(
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Checkbox(
+                checked = android,
+                onCheckedChange = { android = it },
+                colors = CheckboxDefaults.colors(
+                    checkedColor = Color.Blue,
+                    uncheckedColor = Color.Red
+                )
+            )
+            Text("Android")
+        }//Android checkbox
+
+        Row(
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            RadioButton(
+                selected = sistemaSelecionado == 0,
+                onClick = { sistemaSelecionado = 0 }
+            )
+            Text("MacOS")
+        }//MacOS RadioButton
+
+        Row(
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            RadioButton(
+                selected = sistemaSelecionado == 1,
+                onClick = { sistemaSelecionado = 1 }
+            )
+            Text("Windows")
+        }//Windows RadioButton
+
+        Row(
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            RadioButton(
+                selected = sistemaSelecionado == 2,
+                onClick = { sistemaSelecionado = 2}
+            )
+            Text("Linux")
+        }//Linux RadioButton
+
+    } // Coluna
+
+} // Tela principal
